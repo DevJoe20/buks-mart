@@ -1,12 +1,19 @@
-import Success from '@/components/Success'
-import React from 'react'
+// app/success/page.jsx
+"use client";
 
-const page = () => {
+import { Suspense } from "react";
+import SuccessContent from "./SuccessContent"
+
+export default function SuccessPage() {
   return (
-    <div>
-        <Success />
-    </div>
-  )
+    <Suspense
+      fallback={
+        <div className="flex items-center justify-center min-h-screen">
+          <p className="text-lg">Loading checkout details...</p>
+        </div>
+      }
+    >
+      <SuccessContent />
+    </Suspense>
+  );
 }
-
-export default page
