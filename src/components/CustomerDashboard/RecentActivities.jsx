@@ -65,7 +65,7 @@ const ConfirmDeliveryButton = ({ order }) => {
 
       const data = await res.json();
       if (data.success) {
-        router.push(`/thank-you?orderId=${order.id}`);
+        router.push(`/success?orderId=${order.id}`);
       } else {
         alert("Failed to confirm delivery.");
       }
