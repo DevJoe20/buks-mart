@@ -7,8 +7,9 @@ import Footer from "@/components/HomePage/Footer";
 // import Footer from "@/components/Footer";
 
 export const metadata = {
-  title: "My Website",
-  description: "Next.js app",
+  metadataBase: new URL('https://buks-mart-tpjv.vercel.app'),
+  title: "Buks Mart",
+  description: "Your online snack store 🍪",
 };
 
 export default function RootLayout({ children }) {

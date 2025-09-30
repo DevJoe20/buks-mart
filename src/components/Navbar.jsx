@@ -22,17 +22,24 @@ const Navbar = () => {
   const [mounted, setMounted] = useState(false);
   const { notifications, unreadCount } = useNotifications(user?.id);
 
-
   // Store info
   const [businessLogo, setBusinessLogo] = useState(null);
   const [businessName, setBusinessName] = useState("Buks Mart");
 
   const router = useRouter();
 
-  const handleSearch = (e) => {
-    if (e.key === "Enter" && searchQuery.trim() !== "") {
+  // 🔹 Handle search action
+  const handleSearchAction = () => {
+    if (searchQuery.trim() !== "") {
       router.push(`/search?query=${encodeURIComponent(searchQuery)}`);
       setMenuOpen(false);
+    }
+  };
+
+  // 🔹 Handle Enter key
+  const handleSearchKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSearchAction();
     }
   };
 
@@ -173,13 +180,15 @@ const Navbar = () => {
 
       {/* Search (desktop) */}
       <div className="hidden sm:flex items-center border p-2 rounded-md w-full sm:w-[40%]">
-        <FaSearch className="text-gray-400 mr-2" />
+        <button onClick={handleSearchAction}>
+          <FaSearch className="text-gray-400 mr-2 cursor-pointer" />
+        </button>
         <input
           type="text"
           placeholder="Search..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          onKeyDown={handleSearch}
+          onKeyDown={handleSearchKeyDown}
           className="outline-none w-full"
         />
       </div>
@@ -187,15 +196,18 @@ const Navbar = () => {
       {/* Right (desktop) */}
       <div className="hidden md:flex items-center gap-4 relative">
         {user && (
-  <Link
-    href={role === "admin" ? "/admin/dashboard/notifications" : "/customer/dashboard/notifications"}
-    className="relative"
-    onClick={() => markAllAsRead()}
-  >
-    <NotificationBell className="w-6 h-6 text-gray-700 cursor-pointer" />
-  </Link>
-)}
-
+          <Link
+            href={
+              role === "admin"
+                ? "/admin/dashboard/notifications"
+                : "/customer/dashboard/notifications"
+            }
+            className="relative"
+            onClick={() => markAllAsRead()}
+          >
+            <NotificationBell className="w-6 h-6 text-gray-700 cursor-pointer" />
+          </Link>
+        )}
 
         {user && profilePic && (
           <Link
@@ -244,13 +256,15 @@ const Navbar = () => {
 
           {/* Search bar (mobile) */}
           <div className="flex items-center border p-2 rounded-md w-full">
-            <FaSearch className="text-gray-400 mr-2" />
+            <button onClick={handleSearchAction}>
+              <FaSearch className="text-gray-400 mr-2 cursor-pointer" />
+            </button>
             <input
               type="text"
               placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={handleSearch}
+              onKeyDown={handleSearchKeyDown}
               className="outline-none w-full"
             />
           </div>
@@ -285,22 +299,25 @@ const Navbar = () => {
               <span>Dashboard</span>
             </Link>
           )}
+
           {user && (
-  <Link
-    href={role === "admin" ? "/admin/dashboard/notifications" : "/customer/dashboard/notifications"}
-    className="relative flex items-center gap-2"
-    onClick={() => markAllAsRead()}
-  >
-    <span>🔔 Notifications</span>
-    {unreadCount > 0 && (
-      <span className="absolute -top-2 left-28 bg-red-500 text-white text-xs px-2 rounded-full">
-        {unreadCount}
-      </span>
-    )}
-  </Link>
-)}
-
-
+            <Link
+              href={
+                role === "admin"
+                  ? "/admin/dashboard/notifications"
+                  : "/customer/dashboard/notifications"
+              }
+              className="relative flex items-center gap-2"
+              onClick={() => markAllAsRead()}
+            >
+              <span>🔔 Notifications</span>
+              {unreadCount > 0 && (
+                <span className="absolute -top-2 left-28 bg-red-500 text-white text-xs px-2 rounded-full">
+                  {unreadCount}
+                </span>
+              )}
+            </Link>
+          )}
 
           <Link href="/cart-item" className="relative flex items-center gap-2">
             <FiShoppingCart size={20} />
