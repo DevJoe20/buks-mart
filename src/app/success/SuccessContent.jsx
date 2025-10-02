@@ -212,7 +212,7 @@ export default function SuccessContent() {
         </div>
       )}
 
-      <div className="mt-8 space-x-4">
+      <div className="mt-8 space-y-4">
         <Link
           href="/"
           className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
