@@ -9,7 +9,7 @@ import Footer from "@/components/HomePage/Footer";
 export const metadata = {
   metadataBase: new URL('https://buks-mart-tpjv.vercel.app'),
   title: "Buks Mart",
-  description: "Your online snack store 🍪",
+  description: "Your online snack store",
 };
 
 export default function RootLayout({ children }) {

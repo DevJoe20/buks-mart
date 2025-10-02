@@ -182,8 +182,8 @@ const CartItems = () => {
     <div className="w-full mx-auto px-8 sm:px-6 lg:px-6 py-8">
       {/* Free shipping banner */}
       <div className="bg-[#111C44] text-white px-4 py-3 rounded flex justify-between items-center">
-        <span className="font-medium">Free shipping special for you</span>
-        <span className="text-sm">Limited-time offer</span>
+        <span className="font-medium">Fresh snacks, straight to your door</span>
+        <span className="text-sm">Order today & taste the difference</span>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
@@ -231,7 +231,7 @@ const CartItems = () => {
                       </span>
                       {item.product.weight && (
                         <p className="text-sm text-gray-500">
-                          {item.product.weight}kg each
+                          {item.product.weight}kg
                         </p>
                       )}
                     </div>
