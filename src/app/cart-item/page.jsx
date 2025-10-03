@@ -133,7 +133,6 @@ const CartItems = () => {
     setDeliveryFee(rule ? parseFloat(rule.fee) : 0);
   }, [totalWeight, deliveryRules]);
 
-  // ... keep the rest of your code above unchanged ...
 
   const handleCheckout = async () => {
     try {
@@ -173,18 +172,19 @@ const CartItems = () => {
     }
   };
 
-// ... keep the rest of your code below unchanged ...
-
-
   if (loading) return <div className="text-center py-10">Loading...</div>;
 
   return (
     <div className="w-full mx-auto px-8 sm:px-6 lg:px-6 py-8">
-      {/* Free shipping banner */}
-      <div className="bg-[#111C44] text-white px-4 py-3 rounded flex justify-between items-center">
-        <span className="font-medium">Fresh snacks, straight to your door</span>
-        <span className="text-sm">Order today & taste the difference</span>
-      </div>
+      {/* Shipping banner */}
+<div className="bg-[#111C44] text-white px-4 py-3 rounded flex flex-col sm:flex-row sm:justify-between sm:items-center text-center sm:text-left gap-2">
+  <span className="font-medium">
+    Fresh snacks, straight to your door
+  </span>
+  <span className="text-sm">
+    Order today & taste the difference
+  </span>
+</div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
         {/* Left side */}

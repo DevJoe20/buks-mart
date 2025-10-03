@@ -151,7 +151,7 @@ const HeroSlider = () => {
                 </div>
 
                 {/* Right Section */}
-                <div className="space-y-4 bg-black/30 p-6 rounded-lg backdrop-blur-sm">
+                {/* <div className="space-y-4 bg-black/30 p-6 rounded-lg backdrop-blur-sm">
                   {product.tags && (
                     <div>
                       <h3 className="font-medium text-lg mb-1">Tags</h3>
@@ -172,7 +172,54 @@ const HeroSlider = () => {
                   {product.texture && <p><span className="font-medium">Texture:</span> {product.texture}</p>}
                   {product.flavor && <p><span className="font-medium">Flavor:</span> {product.flavor}</p>}
                   {product.shape && <p><span className="font-medium">Shape:</span> {product.shape}</p>}
-                </div>
+                </div> */}
+                {/* Right Section */}
+<div className="space-y-4 bg-black/30 p-6 rounded-lg backdrop-blur-sm">
+  {product.tags && (
+    <div>
+      <h3 className="font-medium text-lg mb-1">Tags</h3>
+      <div className="flex flex-wrap gap-2">
+        {product.tags.split(",").map((tag, index) => (
+          <span
+            key={index}
+            className="bg-white/20 px-3 py-1 rounded-full text-sm"
+          >
+            {tag.trim()}
+          </span>
+        ))}
+      </div>
+    </div>
+  )}
+
+  <div className="flex flex-wrap gap-2">
+    {product.type && (
+      <span className="bg-white/20 px-3 py-1 rounded text-sm">
+        <span className="font-medium">Type:</span> {product.type}
+      </span>
+    )}
+    {product.weight && (
+      <span className="bg-white/20 px-3 py-1 rounded text-sm">
+        <span className="font-medium">Weight:</span> {product.weight}kg
+      </span>
+    )}
+    {product.texture && (
+      <span className="bg-white/20 px-3 py-1 rounded text-sm">
+        <span className="font-medium">Texture:</span> {product.texture}
+      </span>
+    )}
+    {product.flavor && (
+      <span className="bg-white/20 px-3 py-1 rounded text-sm">
+        <span className="font-medium">Flavor:</span> {product.flavor}
+      </span>
+    )}
+    {product.shape && (
+      <span className="bg-white/20 px-3 py-1 rounded text-sm">
+        <span className="font-medium">Shape:</span> {product.shape}
+      </span>
+    )}
+  </div>
+</div>
+
               </div>
 
             </div>

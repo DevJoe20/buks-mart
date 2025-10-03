@@ -65,10 +65,10 @@ const BiscuitsCookies = () => {
               />
             </div>
             <div className="mt-3 flex-grow">
-              <h3 className="text-lg font-bold text-gray-700 truncate">{product.name}</h3>
-              <p className="text-lg font-bold text-gray-500">{product.brand}</p>
+              <h3 className="text-sm sm:text-base lg:text-lg font-bold text-gray-800 truncate">{product.name}</h3>
+              <p className="text-xs sm:text-sm text-gray-500">{product.brand}</p>
             </div>
-            <div className="mt-2 text-base font-bold text-orange-500">
+            <div className="mt-1 sm:mt-2 text-sm sm:text-base font-bold text-orange-500">
               £{product.price.toLocaleString()}
             </div>
             {/* <button

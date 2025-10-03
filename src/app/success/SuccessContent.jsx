@@ -212,20 +212,21 @@ export default function SuccessContent() {
         </div>
       )}
 
-      <div className="mt-8 space-y-4">
-        <Link
-          href="/"
-          className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
-        >
-          Continue Shopping
-        </Link>
-        <Link
-          href="/customer/dashboard/allorders"
-          className="px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 font-medium"
-        >
-          View My Orders
-        </Link>
-      </div>
+      <div className="mt-8 flex flex-col md:flex-row gap-4 w-full max-w-md">
+  <Link
+    href="/"
+    className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium text-center"
+  >
+    Continue Shopping
+  </Link>
+  <Link
+    href="/customer/dashboard/allorders"
+    className="flex-1 px-6 py-3 bg-gray-600 text-white rounded-lg hover:bg-gray-700 font-medium text-center"
+  >
+    View My Orders
+  </Link>
+</div>
+
     </div>
   );
 }

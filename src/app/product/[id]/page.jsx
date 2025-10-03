@@ -13,7 +13,7 @@ const ProductDetails = () => {
   const [loading, setLoading] = useState(true);
   const [adding, setAdding] = useState(false);
 
-  const { addToCart } = useCart(); // ✅ Get addToCart from context
+  const { addToCart } = useCart();
 
   // Fetch product by ID
   useEffect(() => {

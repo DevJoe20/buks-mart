@@ -170,7 +170,7 @@ const Navbar = () => {
 
         {user && role && (
           <Link
-            href={role === "admin" ? "/admin-dashboard" : "/customer/dashboard"}
+            href={role === "admin" ? "/admin/dashboard" : "/customer/dashboard"}
             className="hidden md:block"
           >
             <p className="text-xl text-gray-800 font-bold">Dashboard</p>
@@ -211,7 +211,7 @@ const Navbar = () => {
 
         {user && profilePic && (
           <Link
-            href={role === "admin" ? "/admin-dashboard" : "/customer/dashboard"}
+            href={role === "admin" ? "/admin/dashboard" : "/customer/dashboard"}
           >
             <Image
               src={profilePic || "/default-avatar.png"}
@@ -271,7 +271,7 @@ const Navbar = () => {
 
           {user && profilePic && (
             <Link
-              href={role === "admin" ? "/admin-dashboard" : "/customer/dashboard"}
+              href={role === "admin" ? "/admin/dashboard" : "/customer/dashboard"}
               className="flex items-center gap-2"
             >
               <Image
@@ -293,7 +293,7 @@ const Navbar = () => {
 
           {user && role && (
             <Link
-              href={role === "admin" ? "/admin-dashboard" : "/customer/dashboard"}
+              href={role === "admin" ? "/admin/dashboard" : "/customer/dashboard"}
               className="flex items-center gap-2"
             >
               <span>Dashboard</span>
