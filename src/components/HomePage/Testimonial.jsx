@@ -12,7 +12,7 @@ const Testimonial = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        // 1️⃣ Fetch reviews only
+        // Fetch reviews only
         const { data: reviewsData, error: reviewsError } = await supabase
           .from("reviews")
           .select("id, comment, rating, customer_id, created_at")
@@ -25,7 +25,7 @@ const Testimonial = () => {
           return;
         }
 
-        // 2️⃣ Fetch customers separately
+        // Fetch customers separately
         const customerIds = reviewsData.map((r) => r.customer_id).filter(Boolean);
 
         const { data: customersData, error: customersError } = await supabase
@@ -35,7 +35,7 @@ const Testimonial = () => {
 
         if (customersError) throw customersError;
 
-        // 3️⃣ Merge reviews with customer details
+        // Merge reviews with customer details
         const merged = reviewsData.map((review) => ({
           ...review,
           customer: customersData.find((c) => c.id === review.customer_id) || null,
@@ -73,10 +73,10 @@ const Testimonial = () => {
   };
 
   return (
-    <div className="w-full bg-gray-100 py-12 px-4 md:px-6">
+    <div className="w-full bg-gray-100 py-12 px-4 md:px-6 lg:px-12">
       <h2 className="text-center text-2xl font-bold mb-8">Customer Reviews</h2>
 
-      <div className="max-w-8xl mx-auto px-2">
+      <div className="max-w-7xl mx-auto px-2">
         <div className="block lg:hidden">
           <Slider {...mobileSettings}>
             {reviews.map((item) => (

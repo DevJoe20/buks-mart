@@ -125,7 +125,7 @@ const CustomerProfile = () => {
       {/* Responsive Layout */}
       <div className="grid gap-6 lg:grid-cols-2">
         {/* Profile Overview Card */}
-        <div className="bg-white shadow-lg rounded-2xl p-6 flex flex-col sm:flex-row items-center sm:items-start sm:justify-between gap-6">
+        <div className="bg-[#FAF8F4] shadow-lg rounded-2xl p-6 flex flex-col sm:flex-row items-center sm:items-start sm:justify-between gap-6">
           <div className="items-center gap-6">
             <div className="w-24 h-24 rounded-full border overflow-hidden">
               <img
@@ -153,14 +153,14 @@ const CustomerProfile = () => {
           </div>
           <button
             onClick={() => setOpen(true)}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition w-full sm:w-auto"
+            className="px-4 py-2 bg-[#A44A26] text-white rounded-lg hover:bg-[#C86A46] transition w-full sm:w-auto"
           >
             Edit Profile
           </button>
         </div>
 
         {/* Personal Details Card */}
-        <div className="bg-white shadow-lg rounded-2xl p-6">
+        <div className="bg-[#FAF8F4] shadow-lg rounded-2xl p-6">
           <h3 className="text-lg font-semibold mb-3">Personal Details</h3>
           <div className="grid gap-4 text-gray-700">
             <p>
@@ -256,7 +256,7 @@ const CustomerProfile = () => {
                 <button
                   type="submit"
                   disabled={uploading}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+                  className="px-4 py-2 bg-[#A44A26] text-white rounded-lg hover:bg-[#C86A46] transition"
                 >
                   {uploading ? "Saving..." : "Save Changes"}
                 </button>

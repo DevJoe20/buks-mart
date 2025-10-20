@@ -67,7 +67,7 @@ const AdminAboutUs = () => {
     <div className="w-full px-4 md:px-12 lg:px-20 py-10">
       <div className="max-w-4xl mx-auto">
         {/* Desktop / Tablet */}
-        <div className="hidden md:block bg-white shadow rounded-2xl p-6">
+        <div className="hidden md:block bg-[#FAF8F4] shadow rounded-2xl p-6">
           <div className="flex items-center gap-3 mb-6">
             <InfoIcon className="w-6 h-6 text-blue-600" />
             <h1 className="text-2xl font-bold text-gray-900">Manage About Us</h1>
@@ -90,7 +90,7 @@ const AdminAboutUs = () => {
             className={`px-6 py-2 rounded-lg text-white shadow ${
               saving
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700"
+                : "bg-[#A4511F] hover:bg-[#B85F3A]"
             }`}
           >
             {saving ? "Saving..." : "Save Changes"}
@@ -98,7 +98,7 @@ const AdminAboutUs = () => {
         </div>
 
         {/* Mobile Card */}
-        <div className="md:hidden bg-white shadow rounded-xl p-4">
+        <div className="md:hidden bg-[#FAF8F4] shadow rounded-xl p-4">
           <div className="flex items-center gap-2 mb-4">
             <InfoIcon className="w-5 h-5 text-blue-600" />
             <h2 className="text-lg font-semibold text-gray-800">
@@ -123,7 +123,7 @@ const AdminAboutUs = () => {
             className={`w-full py-2 rounded-lg text-white text-sm shadow ${
               saving
                 ? "bg-gray-400 cursor-not-allowed"
-                : "bg-blue-600 hover:bg-blue-700"
+                : "bg-[#A4511F] hover:bg-[#B85F3A]"
             }`}
           >
             {saving ? "Saving..." : "Save Changes"}

@@ -116,7 +116,7 @@ const CustomerSettings = () => {
         </p>
         <button
           onClick={handlePasswordReset}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          className="px-4 py-2 bg-[#A44A26] text-white rounded-lg hover:bg-[#C86A46] transition"
         >
           Reset Password
         </button>

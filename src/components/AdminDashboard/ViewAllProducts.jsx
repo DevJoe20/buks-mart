@@ -151,7 +151,7 @@ const ViewAllProducts = () => {
             {products.map((product) => (
               <div
                 key={product.id}
-                className="bg-white shadow rounded-xl p-4 flex flex-col"
+                className="bg-[#FAF8F4] shadow rounded-xl p-4 flex flex-col"
               >
                 {/* Product Image */}
                 <img

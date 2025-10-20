@@ -47,7 +47,7 @@ const CustomerSidebar = () => {
       <div
         className={`
           ${collapsed ? "w-16" : "w-64"}
-          bg-gray-700 text-white transition-all duration-300 flex flex-col min-h-screen
+          bg-[#A44A26] text-white transition-all duration-300 flex flex-col min-h-screen
           fixed top-0 left-0 z-40
           md:relative md:translate-x-0
           ${mobileOpen ? "translate-x-0" : "-translate-x-full"} 

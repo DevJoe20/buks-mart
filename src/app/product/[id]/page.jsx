@@ -50,8 +50,8 @@ const ProductDetails = () => {
   if (!product) return <div className="p-6 text-center">Product not found</div>;
 
   return (
-    <div className="bg-[#f9f9ff] py-8 px-6">
-      {/* ====== 📱 Mobile Card ====== */}
+    <div className="bg-[#FAF8F4] py-8 px-6 lg:px-12">
+      {/* Mobile Card */}
       <div className="block md:hidden space-y-6">
         {/* Image */}
         <div className="flex justify-center">
@@ -71,14 +71,14 @@ const ProductDetails = () => {
 
           <h1 className="text-2xl font-semibold">{product.name}</h1>
           <p className="mt-3 text-base">{product.description}</p>
-          <div className="text-xl text-blue-600 font-bold mt-4">
+          <div className="text-xl text-[#A4511F] font-bold mt-4">
             £{product.price}
           </div>
 
           <button
             onClick={handleAddToCart}
             disabled={adding}
-            className="mt-4 w-full px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+            className="mt-4 w-full px-6 py-3 bg-[#A4511F] text-white rounded hover:bg-[#B85F3A] disabled:opacity-50"
           >
             {adding ? "Adding..." : "Add to Cart"}
           </button>
@@ -107,7 +107,7 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      {/* ====== 🖥️ Desktop Card ====== */}
+      {/* 🖥️ Desktop Card */}
       <div className="hidden md:flex flex-wrap">
         {/* Left: Info */}
         <div className="w-1/2 pr-8">
@@ -118,14 +118,14 @@ const ProductDetails = () => {
 
           <h1 className="text-3xl font-semibold">{product.name}</h1>
           <p className="mt-4 text-lg">{product.description}</p>
-          <div className="text-2xl text-blue-600 font-bold mt-6">
+          <div className="text-2xl text-[#A4511F] font-bold mt-6">
             £{product.price}
           </div>
 
           <button
             onClick={handleAddToCart}
             disabled={adding}
-            className="mt-6 px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50"
+            className="mt-6 px-6 py-3 bg-[#A4511F] text-white rounded hover:bg-[#B85F3A] disabled:opacity-50"
           >
             {adding ? "Adding..." : "Add to Cart"}
           </button>

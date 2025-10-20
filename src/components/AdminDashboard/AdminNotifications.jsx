@@ -79,7 +79,7 @@ export default function AdminNotifications() {
           <button
             onClick={markAllAsRead}
             disabled={loading}
-            className="px-3 py-1 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+            className="px-3 py-1 text-sm bg-[#A4511F] text-white rounded-lg hover:bg-[#B85F3A] disabled:opacity-50"
           >
             {loading ? "Updating..." : "Mark all as read"}
           </button>

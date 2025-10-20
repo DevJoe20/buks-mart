@@ -25,7 +25,7 @@ const Customers = () => {
       <div className="hidden md:block overflow-x-auto">
         <table className="w-full border-collapse">
           <thead>
-            <tr className="bg-gray-100">
+            <tr className="bg-[#A44A26] text-white">
               <th className="p-2 border">Profile</th>
               <th className="p-2 border">Name</th>
               <th className="p-2 border">Email</th>
@@ -37,7 +37,7 @@ const Customers = () => {
           <tbody>
             {customers.map((c) => (
               <tr key={c.id}>
-                <td className="p-2 border">
+                <td className="p-2 border bg-[#FAF8F4]">
                   {c.profile_url ? (
                     <img
                       src={c.profile_url}
@@ -48,11 +48,11 @@ const Customers = () => {
                     "N/A"
                   )}
                 </td>
-                <td className="p-2 border">{c.full_name}</td>
-                <td className="p-2 border">{c.email}</td>
-                <td className="p-2 border">{c.phone || "N/A"}</td>
-                <td className="p-2 border">{c.status}</td>
-                <td className="p-2 border">
+                <td className="p-2 border bg-[#FAF8F4]">{c.full_name}</td>
+                <td className="p-2 border bg-[#FAF8F4]">{c.email}</td>
+                <td className="p-2 border bg-[#FAF8F4]">{c.phone || "N/A"}</td>
+                <td className="p-2 border bg-[#FAF8F4]">{c.status}</td>
+                <td className="p-2 border bg-[#FAF8F4]">
                   {new Date(c.created_at).toLocaleDateString()}
                 </td>
               </tr>

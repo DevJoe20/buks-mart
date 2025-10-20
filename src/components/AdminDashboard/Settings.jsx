@@ -157,7 +157,7 @@ const Settings = () => {
             />
             <button
               type="submit"
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 mb-4"
+              className="bg-[#A4511F] text-white px-4 py-2 rounded hover:bg-[#B85F3A] mb-4"
             >
               Update Profile
             </button>
@@ -199,7 +199,7 @@ const Settings = () => {
             />
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 text-sm"
+              className="w-full bg-[#A4511F] text-white py-2 rounded hover:bg-[#B85F3A] text-sm"
             >
               Update Profile
             </button>

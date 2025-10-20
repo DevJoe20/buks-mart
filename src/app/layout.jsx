@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import "./globals.css";
 import Providers from "./Providers";
-import Footer from "@/components/HomePage/Footer";
+import BuksFooter from "@/components/HomePage/BuksFooter";
 // import Providers from "./Providers";
 // import { CartProvider } from "./context/CartContext";
 // import Footer from "@/components/Footer";
@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
           <Navbar />
           {children}   {/* <- every page will render here */}
           {/* <Footer /> */}
-          <Footer />
+          <BuksFooter />
         </Providers>
       </body>
     </html>

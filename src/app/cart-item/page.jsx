@@ -175,9 +175,9 @@ const CartItems = () => {
   if (loading) return <div className="text-center py-10">Loading...</div>;
 
   return (
-    <div className="w-full mx-auto px-8 sm:px-6 lg:px-6 py-8">
+    <div className="w-full mx-auto px-8 sm:px-6 lg:px-10 py-8">
       {/* Shipping banner */}
-<div className="bg-[#111C44] text-white px-4 py-3 rounded flex flex-col sm:flex-row sm:justify-between sm:items-center text-center sm:text-left gap-2">
+<div className="bg-[#A4511F] text-white px-4 py-3 rounded flex flex-col sm:flex-row sm:justify-between sm:items-center text-center sm:text-left gap-2">
   <span className="font-medium">
     Fresh snacks, straight to your door
   </span>
@@ -266,7 +266,7 @@ const CartItems = () => {
 
         {/* Right side - Order Summary */}
         {selectedItems.length > 0 && (
-          <div className="border p-4 rounded-lg bg-white shadow-sm h-fit">
+          <div className="border p-4 rounded-lg bg-[#FAF8F4] shadow-sm h-fit">
             <h2 className="text-lg font-semibold mb-4">Order Summary</h2>
 
             <div className="flex justify-between text-sm text-gray-700">
@@ -318,7 +318,7 @@ const CartItems = () => {
 
             <button
               onClick={handleCheckout}
-              className="w-full py-3 rounded-lg mt-4 font-medium bg-[#111C44] hover:bg-gray-800 text-white"
+              className="w-full py-3 rounded-lg mt-4 font-medium bg-[#A4511F] hover:bg-[#B85F3A] text-white"
             >
               Proceed to Checkout
             </button>

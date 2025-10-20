@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa";
 import { FiShoppingCart } from "react-icons/fi";
 import { HiOutlineMenu, HiX } from "react-icons/hi";
 import Link from "next/link";
@@ -18,30 +17,14 @@ const Navbar = () => {
   const [role, setRole] = useState(null);
   const [profilePic, setProfilePic] = useState(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const [mounted, setMounted] = useState(false);
-  const { notifications, unreadCount } = useNotifications(user?.id);
+  const { unreadCount } = useNotifications(user?.id);
 
   // Store info
   const [businessLogo, setBusinessLogo] = useState(null);
   const [businessName, setBusinessName] = useState("Buks Mart");
 
   const router = useRouter();
-
-  // 🔹 Handle search action
-  const handleSearchAction = () => {
-    if (searchQuery.trim() !== "") {
-      router.push(`/search?query=${encodeURIComponent(searchQuery)}`);
-      setMenuOpen(false);
-    }
-  };
-
-  // 🔹 Handle Enter key
-  const handleSearchKeyDown = (e) => {
-    if (e.key === "Enter") {
-      handleSearchAction();
-    }
-  };
 
   useEffect(() => {
     setMounted(true);
@@ -56,7 +39,6 @@ const Navbar = () => {
           .single();
 
         if (error) throw error;
-
         if (data) {
           setBusinessLogo(data.business_logo);
           setBusinessName(data.business_name);
@@ -152,7 +134,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="w-full px-6 md:px-6 py-3 flex items-center justify-between shadow-md relative">
+    <nav className="w-full bg-[#FAF8F4] py-4 px-6 md:px-10 flex items-center justify-between shadow-sm border-b border-gray-200 relative">
       {/* Left: Logo and brand */}
       <div className="flex items-center gap-3">
         <Image
@@ -160,37 +142,39 @@ const Navbar = () => {
           alt={businessName}
           width={48}
           height={48}
-          className="h-12 w-12 rounded object-cover"
+          className="h-10 w-10 rounded-full object-cover bg-[#A04C1A]"
         />
-        <div className="text-xl font-bold text-gray-800">{businessName}</div>
+        <div className="text-xl font-bold text-gray-900 hover:text-[#A04C1A] transition">
+         {mounted ? businessName : "Buks Mart"}
+        </div>
+      </div>
 
-        <Link href="/" className="hidden md:block">
-          <p className="text-xl text-gray-800 font-bold">Home</p>
+      {/* Middle Section - Navigation Links */}
+      <div className="hidden md:flex items-center gap-8 text-lg font-semibold">
+        <Link href="/" className="text-[#A04C1A]">
+          Home
+        </Link>
+        <Link href="/shop" className="hover:text-[#A04C1A] transition">
+          Shop
+        </Link>
+        <Link href="/about" className="hover:text-[#A04C1A] transition">
+          About
+        </Link>
+        <Link href="/newsletter" className="hover:text-[#A04C1A] transition">
+          Newsletter
+        </Link>
+        <Link href="/contact" className="hover:text-[#A04C1A] transition">
+          Contact
         </Link>
 
         {user && role && (
           <Link
             href={role === "admin" ? "/admin/dashboard" : "/customer/dashboard"}
-            className="hidden md:block"
+            className="hover:text-[#A04C1A] transition"
           >
-            <p className="text-xl text-gray-800 font-bold">Dashboard</p>
+            Dashboard
           </Link>
         )}
-      </div>
-
-      {/* Search (desktop) */}
-      <div className="hidden sm:flex items-center border p-2 rounded-md w-full sm:w-[40%]">
-        <button onClick={handleSearchAction}>
-          <FaSearch className="text-gray-400 mr-2 cursor-pointer" />
-        </button>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          onKeyDown={handleSearchKeyDown}
-          className="outline-none w-full"
-        />
       </div>
 
       {/* Right (desktop) */}
@@ -203,9 +187,10 @@ const Navbar = () => {
                 : "/customer/dashboard/notifications"
             }
             className="relative"
-            onClick={() => markAllAsRead()}
           >
-            <NotificationBell className="w-6 h-6 text-gray-700 cursor-pointer" />
+            {mounted && user && (
+              <NotificationBell />
+            )}
           </Link>
         )}
 
@@ -224,13 +209,19 @@ const Navbar = () => {
         )}
 
         {!user && (
-          <>
-            <Link href="/sign-in">Sign-In</Link>/<Link href="/sign-up">Sign-Up</Link>
-          </>
+          <div className="flex gap-1">
+            <Link href="/sign-in" className="hover:text-[#A04C1A]">
+              Sign-In
+            </Link>
+            /
+            <Link href="/sign-up" className="hover:text-[#A04C1A]">
+              Sign-Up
+            </Link>
+          </div>
         )}
 
         <Link href="/cart-item" className="relative">
-          <FiShoppingCart size={20} />
+          <FiShoppingCart size={20} className="text-[#A04C1A]" />
           {mounted && cartCount > 0 && (
             <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 rounded-full">
               {cartCount}
@@ -241,7 +232,7 @@ const Navbar = () => {
 
       {/* Mobile Menu Toggle */}
       <button
-        className="md:hidden text-2xl"
+        className="md:hidden text-2xl text-[#A04C1A]"
         onClick={() => setMenuOpen(!menuOpen)}
       >
         {menuOpen ? <HiX /> : <HiOutlineMenu />}
@@ -249,25 +240,53 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="absolute top-full left-0 w-full bg-white shadow-lg flex flex-col gap-4 p-6 md:hidden z-50">
-          <Link href="/" className="text-orange-500 font-bold">
+        <div className="absolute top-full left-0 w-full bg-[#FAF8F4] shadow-lg flex flex-col gap-4 p-6 md:hidden z-50">
+          <Link href="/" className="font-semibold text-[#A04C1A]">
             Home
           </Link>
+          <Link href="/shop" className="hover:text-[#A04C1A] transition">
+            Shop
+          </Link>
+          <Link href="/about" className="hover:text-[#A04C1A] transition">
+            About
+          </Link>
+          <Link href="/newsletter" className="hover:text-[#A04C1A] transition">
+            Newsletter
+          </Link>
+          <Link href="/contact" className="hover:text-[#A04C1A] transition">
+            Contact
+          </Link>
 
-          {/* Search bar (mobile) */}
-          <div className="flex items-center border p-2 rounded-md w-full">
-            <button onClick={handleSearchAction}>
-              <FaSearch className="text-gray-400 mr-2 cursor-pointer" />
-            </button>
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={handleSearchKeyDown}
-              className="outline-none w-full"
-            />
-          </div>
+          {user && role && (
+            <Link
+              href={
+                role === "admin" ? "/admin/dashboard" : "/customer/dashboard"
+              }
+              className="hover:text-[#A04C1A] transition"
+            >
+              Dashboard
+            </Link>
+          )}
+
+          <div className="border-t border-gray-200 my-2" />
+
+          {user && (
+            <Link
+              href={
+                role === "admin"
+                  ? "/admin/dashboard/notifications"
+                  : "/customer/dashboard/notifications"
+              }
+              className="relative flex items-center gap-2"
+            >
+              <span>🔔 Notifications</span>
+              {unreadCount > 0 && (
+                <span className="absolute -top-2 left-28 bg-red-500 text-white text-xs px-2 rounded-full">
+                  {unreadCount}
+                </span>
+              )}
+            </Link>
+          )}
 
           {user && profilePic && (
             <Link
@@ -287,40 +306,18 @@ const Navbar = () => {
 
           {!user && (
             <div className="flex gap-2">
-              <Link href="/sign-in">Sign-In</Link>/<Link href="/sign-up">Sign-Up</Link>
+              <Link href="/sign-in" className="hover:text-[#A04C1A]">
+                Sign-In
+              </Link>
+              /
+              <Link href="/sign-up" className="hover:text-[#A04C1A]">
+                Sign-Up
+              </Link>
             </div>
           )}
 
-          {user && role && (
-            <Link
-              href={role === "admin" ? "/admin/dashboard" : "/customer/dashboard"}
-              className="flex items-center gap-2"
-            >
-              <span>Dashboard</span>
-            </Link>
-          )}
-
-          {user && (
-            <Link
-              href={
-                role === "admin"
-                  ? "/admin/dashboard/notifications"
-                  : "/customer/dashboard/notifications"
-              }
-              className="relative flex items-center gap-2"
-              onClick={() => markAllAsRead()}
-            >
-              <span>🔔 Notifications</span>
-              {unreadCount > 0 && (
-                <span className="absolute -top-2 left-28 bg-red-500 text-white text-xs px-2 rounded-full">
-                  {unreadCount}
-                </span>
-              )}
-            </Link>
-          )}
-
           <Link href="/cart-item" className="relative flex items-center gap-2">
-            <FiShoppingCart size={20} />
+            <FiShoppingCart className="text-[#A04C1A]" size={20} />
             <span>Cart</span>
             {mounted && cartCount > 0 && (
               <span className="absolute -top-2 left-6 bg-red-500 text-white text-xs px-2 rounded-full">

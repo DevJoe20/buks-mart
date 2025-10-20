@@ -37,10 +37,10 @@ const AdminSidebar = () => {
     { name: "Customers", path: "/admin/dashboard/customers", icon: <Users size={20} /> },
     { name: "Notifications", path: "/admin/dashboard/notifications", icon: <Bell size={20} /> },
     { name: "Messages", path: "/admin/dashboard/messages", icon: <MessageSquare size={20} /> },
-    { name: "Reports", path: "/admin/dashboard/reports", icon: <BarChart size={20} /> },
+    // { name: "Reports", path: "/admin/dashboard/reports", icon: <BarChart size={20} /> },
     { name: "FAQs", path: "/admin/dashboard/faqs", icon: <HelpCircle size={20} /> },
-    { name: "Policy", path: "/admin/dashboard/policy", icon: <FileText size={20} /> },
-    { name: "Terms", path: "/admin/dashboard/terms", icon: <FileText size={20} /> },
+    // { name: "Policy", path: "/admin/dashboard/policy", icon: <FileText size={20} /> },
+    // { name: "Terms", path: "/admin/dashboard/terms", icon: <FileText size={20} /> },
     { name: "About Us", path: "/admin/dashboard/info", icon: <Info size={20} /> },
     { name: "Settings", path: "/admin/dashboard/settings", icon: <Settings size={20} /> },
   ];
@@ -59,7 +59,7 @@ const AdminSidebar = () => {
       <div
         className={`
           ${collapsed ? "w-16" : "w-64"}
-          bg-gray-900 text-white transition-all duration-300 flex flex-col min-h-screen
+          bg-[#A44A26] text-white transition-all duration-300 flex flex-col min-h-screen
           fixed top-0 left-0 z-40
           md:relative md:translate-x-0
           ${mobileOpen ? "translate-x-0" : "-translate-x-full"} 

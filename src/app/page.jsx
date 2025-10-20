@@ -1,16 +1,22 @@
-import BiscuitsCookies from '@/components/HomePage/BiscuitsCookies'
+// import BiscuitsCookies from '@/components/HomePage/BiscuitsCookies'
 import HeroSlider from '@/components/HomePage/HeroSlider'
+import PopularNaijaSnacks from '@/components/HomePage/PopularNaijaSnacks'
+import ReadyToShop from '@/components/HomePage/ReadyToShop'
 import Testimonial from '@/components/HomePage/Testimonial'
-import Newsletter from '@/components/Newsletter'
+import WhyChooseUs from '@/components/HomePage/WhyChooseUs'
+// import Newsletter from '@/components/Newsletter'
 import React from 'react'
 
 const page = () => {
   return (
     <div>
       <HeroSlider />
-      <BiscuitsCookies />
+      <WhyChooseUs />
+      <PopularNaijaSnacks />
+      <ReadyToShop />
+      {/* <BiscuitsCookies /> */}
       <Testimonial />
-      <Newsletter />
+      {/* <Newsletter /> */}
     </div>
   )
 }

@@ -84,22 +84,22 @@ export default function Dashboard() {
     <div className="p-6 space-y-6">
       {/* Totals */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        <div className="bg-white shadow-md rounded-2xl p-4 text-center">
+        <div className="bg-[#FAF8F4] shadow-md rounded-2xl p-4 text-center">
           <h3 className="text-lg font-semibold">Total Customers</h3>
           <p className="text-2xl font-bold">{totals.customers}</p>
         </div>
-        <div className="bg-white shadow-md rounded-2xl p-4 text-center">
+        <div className="bg-[#FAF8F4] shadow-md rounded-2xl p-4 text-center">
           <h3 className="text-lg font-semibold">Total Orders</h3>
           <p className="text-2xl font-bold">{totals.orders}</p>
         </div>
-        <div className="bg-white shadow-md rounded-2xl p-4 text-center">
+        <div className="bg-[#FAF8F4] shadow-md rounded-2xl p-4 text-center">
           <h3 className="text-lg font-semibold">Total Revenue</h3>
           <p className="text-2xl font-bold">£{totals.revenue.toFixed(2)}</p>
         </div>
       </div>
 
       {/* Revenue Trend Chart */}
-      <div className="bg-white shadow-md rounded-2xl p-6 mt-6">
+      <div className="bg-[#FAF8F4] shadow-md rounded-2xl p-6 mt-6">
         <h3 className="text-lg font-semibold mb-4">Revenue Trend (per month)</h3>
         <ResponsiveContainer width="100%" height={300}>
           <LineChart data={revenueTrend}>
@@ -113,7 +113,7 @@ export default function Dashboard() {
       </div>
 
       {/* Recent Customers */}
-      <div className="bg-white shadow-md rounded-2xl p-6 mt-4">
+      <div className="bg-[#FAF8F4] shadow-md rounded-2xl p-6 mt-4">
         <h3 className="text-lg font-semibold mb-4">Recent Customers</h3>
         <ul className="space-y-2">
           {recentCustomers.map(c => (
@@ -126,7 +126,7 @@ export default function Dashboard() {
       </div>
 
       {/* Recent Orders */}
-      <div className="bg-white shadow-md rounded-2xl p-6 mt-4">
+      <div className="bg-[#FAF8F4] shadow-md rounded-2xl p-6 mt-4">
         <h3 className="text-lg font-semibold mb-4">Recent Orders</h3>
         <ul className="space-y-2">
           {recentOrders.map(o => (

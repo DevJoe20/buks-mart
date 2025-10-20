@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useEffect, useState } from "react";
 import { supabase } from "../../../supabaseClient";
 
@@ -25,7 +25,7 @@ const AdminMessages = () => {
     };
   }, []);
 
-  // Check if user is admin + fetch messages
+  // Check if user is admin + fetch inquiries
   useEffect(() => {
     if (!session) return;
 
@@ -46,19 +46,19 @@ const AdminMessages = () => {
 
         setIsAdmin(true);
 
-        // 2️⃣ Fetch all contact messages with customer details
+        // 2️⃣ Fetch all inquiries
         const { data, error } = await supabase
-          .from("contact_messages")
+          .from("contact_inquiries")
           .select(
             `
             id,
+            first_name,
+            last_name,
+            email,
+            phone,
+            subject,
             message,
-            created_at,
-            customers (
-              full_name,
-              email,
-              profile_url
-            )
+            created_at
           `
           )
           .order("created_at", { ascending: false });
@@ -102,27 +102,25 @@ const AdminMessages = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 px-6">
-      <div className="max-w-6xl mx-auto bg-white shadow-md rounded-2xl p-6">
+      <div className="max-w-6xl mx-auto bg-[#FAF8F4] shadow-md rounded-2xl p-6">
         <h2 className="text-2xl font-bold text-gray-700 mb-6 flex items-center gap-2">
-          📩 Contact Messages
+          📩 Contact Inquiries
         </h2>
 
-        {/* Desktop Table */}
+        {/* Desktop Two-Column Table */}
         <div className="hidden md:block overflow-x-auto">
           <table className="w-full border-collapse text-sm md:text-base">
             <thead>
               <tr className="bg-gray-200 text-left text-gray-600 uppercase text-xs md:text-sm">
-                <th className="py-3 px-4">Customer</th>
-                <th className="py-3 px-4">Email</th>
-                <th className="py-3 px-4">Message</th>
-                <th className="py-3 px-4">Date</th>
+                <th className="py-3 px-4 w-1/2">Contact Info</th>
+                <th className="py-3 px-4 w-1/2">Inquiry Details</th>
               </tr>
             </thead>
             <tbody>
               {messages.length === 0 ? (
                 <tr>
-                  <td colSpan="4" className="text-center py-6 text-gray-500">
-                    No messages found.
+                  <td colSpan="2" className="text-center py-6 text-gray-500">
+                    No inquiries found.
                   </td>
                 </tr>
               ) : (
@@ -133,15 +131,28 @@ const AdminMessages = () => {
                       idx % 2 === 0 ? "bg-gray-50" : "bg-white"
                     } hover:bg-gray-100 transition`}
                   >
-                    <td className="py-3 px-4 font-medium">
-                      {msg.customers.full_name}
+                    {/* Contact Info */}
+                    <td className="py-4 px-4 align-top">
+                      <p className="font-medium">
+                        {msg.first_name} {msg.last_name || ""}
+                      </p>
+                      <p className="text-blue-600">{msg.email}</p>
+                      {msg.phone && (
+                        <p className="text-sm text-gray-600">{msg.phone}</p>
+                      )}
                     </td>
-                    <td className="py-3 px-4 text-blue-600">
-                      {msg.customers.email}
-                    </td>
-                    <td className="py-3 px-4">{msg.message}</td>
-                    <td className="py-3 px-4 text-xs text-gray-500">
-                      {new Date(msg.created_at).toLocaleString()}
+
+                    {/* Inquiry Details */}
+                    <td className="py-4 px-4 align-top">
+                      {msg.subject && (
+                        <p className="font-semibold text-gray-700 mb-1">
+                          {msg.subject}
+                        </p>
+                      )}
+                      <p className="text-gray-700 mb-2">{msg.message}</p>
+                      <p className="text-xs text-gray-500">
+                        {new Date(msg.created_at).toLocaleString()}
+                      </p>
                     </td>
                   </tr>
                 ))
@@ -153,46 +164,44 @@ const AdminMessages = () => {
         {/* Mobile Cards */}
         <div className="grid gap-4 md:hidden sm:px-4">
           {messages.length === 0 ? (
-            <p className="text-center text-gray-500">No messages found.</p>
+            <p className="text-center text-gray-500">No inquiries found.</p>
           ) : (
             messages.map((msg) => (
               <div
                 key={msg.id}
                 className="p-4 border rounded-lg shadow-sm bg-white"
               >
-                {/* Customer (with avatar) */}
-                <div className="grid items-center gap-3 mb-3">
-                  <img
-                    src={
-                      msg.customers?.profile_url ||
-                      `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                        msg.customers?.full_name || "User"
-                      )}`
-                    }
-                    alt={msg.customers?.full_name}
-                    className="w-10 h-10 rounded-full object-cover border"
-                  />
-                  <div>
-                    <p className="text-xs font-semibold text-gray-500">Full Name</p>
-                    <p className="text-sm font-medium">
-                      {msg.customers.full_name}
-                    </p>
-                    <p className="text-xs font-semibold text-gray-500">Email</p>
-                    <p className="text-xs text-blue-600">
-                      {msg.customers.email}
-                    </p>
-                  </div>
+                <div className="mb-3">
+                  <p className="text-xs font-semibold text-gray-500">Name</p>
+                  <p className="text-sm font-medium">
+                    {msg.first_name} {msg.last_name || ""}
+                  </p>
+                  <p className="text-xs font-semibold text-gray-500">Email</p>
+                  <p className="text-xs text-blue-600">{msg.email}</p>
+                  {msg.phone && (
+                    <>
+                      <p className="text-xs font-semibold text-gray-500">
+                        Phone
+                      </p>
+                      <p className="text-xs">{msg.phone}</p>
+                    </>
+                  )}
                 </div>
 
-                {/* Message */}
+                {msg.subject && (
+                  <div className="mb-2">
+                    <p className="text-xs font-semibold text-gray-500">
+                      Subject
+                    </p>
+                    <p className="text-sm text-gray-700">{msg.subject}</p>
+                  </div>
+                )}
+
                 <div className="mb-2">
-                  <p className="text-xs font-semibold text-gray-500">
-                    Message
-                  </p>
+                  <p className="text-xs font-semibold text-gray-500">Message</p>
                   <p className="text-sm text-gray-700">{msg.message}</p>
                 </div>
 
-                {/* Date */}
                 <div>
                   <p className="text-xs font-semibold text-gray-500">Date</p>
                   <p className="text-xs text-gray-600">

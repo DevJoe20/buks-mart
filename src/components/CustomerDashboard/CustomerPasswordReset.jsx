@@ -34,7 +34,7 @@ const CustomerPasswordReset = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen lg:px-12">
-      <div className="w-full max-w-md bg-white shadow-lg rounded-2xl p-6">
+      <div className="w-full max-w-md bg-[#FAF8F4] shadow-lg rounded-2xl p-6">
         <h2 className="text-2xl font-semibold text-center mb-4">Reset Password</h2>
         <p className="text-center text-gray-600 mb-6">
           Enter your new password below.
@@ -76,7 +76,7 @@ const CustomerPasswordReset = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
+            className="w-full bg-[#A44A26] text-white px-4 py-2 rounded-lg hover:bg-[#C86A46] transition"
           >
             {loading ? "Resetting..." : "Reset Password"}
           </button>

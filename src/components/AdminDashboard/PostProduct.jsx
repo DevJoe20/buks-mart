@@ -220,7 +220,7 @@ const PostProduct = () => {
           <span>Available?</span>
         </label>
 
-        <button type="submit" disabled={loading || !adminId} className="col-span-1 sm:col-span-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+        <button type="submit" disabled={loading || !adminId} className="col-span-1 sm:col-span-2 bg-[#A44A26] text-white px-4 py-2 rounded hover:bg-[#B85F3A] transition">
           {loading ? 'Posting...' : 'Post Product'}
         </button>
       </form>

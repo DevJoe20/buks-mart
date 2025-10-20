@@ -44,7 +44,7 @@ export default function CustomerNotifications() {
             <div
               key={n.id}
               onClick={() => markAsRead(n.id)}
-              className={`flex items-center gap-3 p-4 rounded-2xl shadow-md border bg-white transition cursor-pointer
+              className={`flex items-center gap-3 p-4 rounded-2xl shadow-md border bg-[#FAF8F4] transition cursor-pointer
                 md:flex-row flex-col md:items-center md:text-left text-center
                 ${n.read ? "hover:bg-gray-50" : "hover:bg-blue-50"}`}
             >

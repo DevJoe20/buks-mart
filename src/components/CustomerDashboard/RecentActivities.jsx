@@ -81,7 +81,7 @@ const ConfirmDeliveryButton = ({ order }) => {
     <button
       onClick={confirmDelivery}
       disabled={loading || order.status !== "dispatched"}
-      className="px-3 py-1 bg-green-600 text-white rounded text-xs hover:bg-green-700 disabled:opacity-50"
+      className="px-3 py-1 bg-[#A44A26] text-white rounded text-xs hover:bg-[#E08B68] disabled:opacity-50"
     >
       {loading ? "Confirming..." : "Confirm Delivery"}
     </button>
@@ -178,9 +178,9 @@ const RecentActivities = () => {
       <h2 className="text-xl font-semibold mb-4">My Recent Activities</h2>
 
       {/* Desktop Table */}
-      <div className="hidden md:block overflow-x-auto rounded-lg shadow">
+      <div className="hidden md:block overflow-x-auto rounded-lg shadow bg-[#FAF8F4]">
         <table className="w-full text-left border-collapse">
-          <thead className="bg-gray-100 text-gray-700 text-sm">
+          <thead className="bg-[#A44A26] text-white text-sm">
             <tr>
               <th className="p-3">Customer</th>
               <th className="p-3">Email</th>
@@ -218,7 +218,7 @@ const RecentActivities = () => {
                     className={`px-2 py-1 rounded-full text-xs font-medium
                       ${
                         order.status === "completed"
-                          ? "bg-green-100 text-green-600"
+                          ? "bg-[#A44A26] text-white"
                           : order.status === "pending"
                           ? "bg-yellow-100 text-yellow-600"
                           : order.status === "dispatched"
