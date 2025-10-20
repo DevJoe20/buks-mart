@@ -67,7 +67,7 @@ export default function PopularNaijaSnacks() {
 
         {/* Button */}
         <div className="mt-10">
-          <Link href="/snacks">
+          <Link href="/shop">
             <button className="bg-[#A44A26] text-white px-6 py-2 rounded-md font-medium hover:bg-[#8d3e1f] transition">
               View All Snacks
             </button>
