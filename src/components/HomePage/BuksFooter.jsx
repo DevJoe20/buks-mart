@@ -81,10 +81,10 @@ const BuksFooter = () => {
           <h3 className="text-white font-semibold mb-4">Popular Snacks</h3>
           <div className="space-y-2 text-sm">
             <Link href="/shop" className="space-y-2 hover:text-white grid">
-            <div>Plantain Chips</div>
-            <div>Chin Chin</div>
-            <div>Puff Puff</div>
-            <div>Meat Pie</div>
+            <div>Bobo Drink</div>
+            <div>Splash Strawberry Candy</div>
+            <div>Lemon-X</div>
+            <div>Sweetco Milkose Candy</div>
             </Link>
           </div>
         </div>
@@ -107,13 +107,16 @@ const BuksFooter = () => {
 
       <hr className="border-gray-700 my-6" />
 
-      <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-500 space-y-3 md:space-y-0">
-        <p>© {new Date().getFullYear()} {storeInfo?.business_name || "Naija Bites"}. All rights reserved.</p>
-        <div className="flex space-x-4">
-          <a href="#" className="hover:text-white">Privacy Policy</a>
-          <a href="#" className="hover:text-white">Terms of Service</a>
-        </div>
-      </div>
+<div className="flex flex-col md:flex-row justify-center items-center text-sm text-gray-500 space-y-3 md:space-y-0 text-center">
+  <p>
+    © {new Date().getFullYear()} {storeInfo?.business_name || "Naija Bites"}. All rights reserved.
+  </p>
+  {/* <div className="flex space-x-4 md:ml-4">
+    <a href="#" className="hover:text-white">Privacy Policy</a>
+    <a href="#" className="hover:text-white">Terms of Service</a>
+  </div> */}
+</div>
+
     </footer>
   );
 };

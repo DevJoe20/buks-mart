@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Filter, X } from "lucide-react";
 import { supabase } from "../../../supabaseClient";
 import { useCart } from "../context/CartContext";
-import { toast } from "sonner"; 
+import { toast } from "sonner";
 
 export default function OurShop() {
   const [products, setProducts] = useState([]);
@@ -17,9 +17,8 @@ export default function OurShop() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const { addToCart } = useCart(); 
+  const { addToCart } = useCart();
 
-  // Fetch products and categories
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -44,11 +43,10 @@ export default function OurShop() {
   }, []);
 
   const handleAddToCart = (product) => {
-    addToCart(product, 1); // instant local update
+    addToCart(product, 1);
     toast.success(`${product.name} added to cart!`);
   };
 
-  // Apply filters and sorting
   useEffect(() => {
     let filtered = [...products];
 
@@ -148,10 +146,10 @@ export default function OurShop() {
         </div>
       </div>
 
-      {/* Main Layout */}
-      <div className="flex flex-col lg:flex-row gap-6">
-        {/* Sidebar Filters */}
-        <div className="lg:w-1/4 border rounded-md p-4 bg-[#FAF8F4]">
+      {/* === NEW CONTAINER STRUCTURE === */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        {/* Sidebar (fixed height or scrollable) */}
+        <div className="lg:col-span-1 border rounded-md p-4 bg-[#FAF8F4] h-auto lg:h-[300px] overflow-y-auto lg:sticky lg:top-6">
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-semibold text-gray-700 flex items-center gap-2">
               <Filter size={16} /> Filters
@@ -216,7 +214,7 @@ export default function OurShop() {
         </div>
 
         {/* Product List */}
-        <div className="lg:w-3/4">
+        <div className="lg:col-span-3">
           <div className="flex justify-between items-center mb-4">
             <p className="text-sm text-gray-600">
               Showing {filteredProducts.length} products
@@ -231,7 +229,6 @@ export default function OurShop() {
             )}
           </div>
 
-          {/* Products Grid */}
           {loading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[1, 2, 3, 4, 5, 6].map((i) => (
@@ -252,7 +249,6 @@ export default function OurShop() {
                     alt={product.name}
                     className="w-full h-56 object-cover px-4 py-4 rounded"
                   />
-
                   <div className="flex-1 flex flex-col justify-between px-4 py-3">
                     <h4 className="text-[15px] font-semibold text-[#7a3e00] mb-1">
                       {product.name}

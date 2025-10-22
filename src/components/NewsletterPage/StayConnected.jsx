@@ -25,10 +25,10 @@ export default function StayConnected() {
         {/* Right Image Section */}
         <div className="md:w-1/2 bg-[#F3F3F3] rounded-md flex items-center justify-center h-64 md:h-72">
           <Image
-            src="/buysnacks.jpeg"
+            src="/news.png"
             alt="Stay Connected - Nigerian snacks"
             width={450}
-            height={300}
+            height={400}
             className="rounded-md object-cover w-full h-full"
           />
         </div>

@@ -37,7 +37,7 @@ const ProductDetails = () => {
 
     setAdding(true);
     try {
-      await addToCart(product, 1); // ✅ Call context addToCart
+      await addToCart(product, 1);
       toast.success("Added to cart 🛒");
     } catch (err) {
       toast.error("Failed to add to cart ❌");
