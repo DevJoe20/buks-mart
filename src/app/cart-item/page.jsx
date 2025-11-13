@@ -20,7 +20,7 @@ const CartItems = () => {
     getUser();
   }, []);
 
-  // Fetch cart items
+  // Fetch cart items (with multiple product images)
   useEffect(() => {
     if (!user) return;
 
@@ -36,8 +36,8 @@ const CartItems = () => {
             name,
             price,
             description,
-            image_url,
-            weight
+            weight,
+            product_images (image_url, is_main)
           )
         `)
         .eq("customer_id", user.id);
@@ -133,18 +133,24 @@ const CartItems = () => {
     setDeliveryFee(rule ? parseFloat(rule.fee) : 0);
   }, [totalWeight, deliveryRules]);
 
-
   const handleCheckout = async () => {
     try {
-      const items = selectedProducts.map((item) => ({
-        id: item.product.id,
-        name: item.product.name,
-        price: item.product.price,
-        quantity: item.quantity,
-        description: item.product.description || "No description",
-        image: item.product.image_url || "",
-        weight: item.product.weight || "0",
-      }));
+      const items = selectedProducts.map((item) => {
+        const mainImage =
+          item.product.product_images?.find((img) => img.is_main)?.image_url ||
+          item.product.product_images?.[0]?.image_url ||
+          "";
+
+        return {
+          id: item.product.id,
+          name: item.product.name,
+          price: item.product.price,
+          quantity: item.quantity,
+          description: item.product.description || "No description",
+          image: mainImage,
+          weight: item.product.weight || "0",
+        };
+      });
 
       const res = await fetch("/api/checkout", {
         method: "POST",
@@ -177,14 +183,12 @@ const CartItems = () => {
   return (
     <div className="w-full mx-auto px-8 sm:px-6 lg:px-10 py-8">
       {/* Shipping banner */}
-<div className="bg-[#A4511F] text-white px-4 py-3 rounded flex flex-col sm:flex-row sm:justify-between sm:items-center text-center sm:text-left gap-2">
-  <span className="font-medium">
-    Fresh snacks, straight to your door
-  </span>
-  <span className="text-sm">
-    Order today & taste the difference
-  </span>
-</div>
+      <div className="bg-[#A4511F] text-white px-4 py-3 rounded flex flex-col sm:flex-row sm:justify-between sm:items-center text-center sm:text-left gap-2">
+        <span className="font-medium">
+          Fresh snacks, straight to your door
+        </span>
+        <span className="text-sm">Order today & taste the difference</span>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
         {/* Left side */}
@@ -204,63 +208,71 @@ const CartItems = () => {
           </div>
 
           <div className="mt-4 space-y-4">
-            {cartItems.map((item) => (
-              <div
-                key={item.id}
-                className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4"
-              >
-                <div className="flex items-start gap-4 w-full sm:w-2/3">
-                  <input
-                    type="checkbox"
-                    checked={selectedItems.includes(item.id)}
-                    onChange={() => toggleSelectItem(item.id)}
-                    className="w-5 h-5 mt-2"
-                  />
-                  <img
-                    src={item.product.image_url}
-                    alt={item.product.name}
-                    className="w-20 h-20 object-cover rounded"
-                  />
-                  <div>
-                    <h3 className="font-medium text-gray-800 line-clamp-2">
-                      {item.product.name}
-                    </h3>
-                    <div className="mt-2">
-                      <span className="text-lg font-bold text-gray-800">
-                        £{item.product.price.toLocaleString()}
-                      </span>
-                      {item.product.weight && (
-                        <p className="text-sm text-gray-500">
-                          {item.product.weight}kg
-                        </p>
-                      )}
+            {cartItems.map((item) => {
+              const mainImage =
+                item.product.product_images?.find((img) => img.is_main)
+                  ?.image_url ||
+                item.product.product_images?.[0]?.image_url ||
+                "/placeholder.png";
+
+              return (
+                <div
+                  key={item.id}
+                  className="flex flex-col sm:flex-row sm:items-center justify-between border-b pb-4"
+                >
+                  <div className="flex items-start gap-4 w-full sm:w-2/3">
+                    <input
+                      type="checkbox"
+                      checked={selectedItems.includes(item.id)}
+                      onChange={() => toggleSelectItem(item.id)}
+                      className="w-5 h-5 mt-2"
+                    />
+                    <img
+                      src={mainImage}
+                      alt={item.product.name}
+                      className="w-20 h-20 object-cover rounded"
+                    />
+                    <div>
+                      <h3 className="font-medium text-gray-800 line-clamp-2">
+                        {item.product.name}
+                      </h3>
+                      <div className="mt-2">
+                        <span className="text-lg font-bold text-gray-800">
+                          £{item.product.price.toLocaleString()}
+                        </span>
+                        {item.product.weight && (
+                          <p className="text-sm text-gray-500">
+                            {item.product.weight}kg
+                          </p>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto mt-4 sm:mt-0">
-                  <select
-                    value={item.quantity}
-                    onChange={(e) =>
-                      handleQuantityChange(item.id, parseInt(e.target.value))
-                    }
-                    className="border px-2 py-1 rounded"
-                  >
-                    {[...Array(10)].map((_, i) => (
-                      <option key={i + 1} value={i + 1}>
-                        Qty {i + 1}
-                      </option>
-                    ))}
-                  </select>
-                  <button
-                    onClick={() => handleDelete(item.id)}
-                    className="text-gray-500 hover:text-red-500"
-                  >
-                    <FiTrash2 size={18} />
-                  </button>
+                  <div className="flex items-center justify-between sm:justify-end gap-4 w-full sm:w-auto mt-4 sm:mt-0">
+                    <select
+                      value={item.quantity}
+                      onChange={(e) =>
+                        handleQuantityChange(item.id, parseInt(e.target.value))
+                      }
+                      className="border px-2 py-1 rounded"
+                    >
+                      {[...Array(10)].map((_, i) => (
+                        <option key={i + 1} value={i + 1}>
+                          Qty {i + 1}
+                        </option>
+                      ))}
+                    </select>
+                    <button
+                      onClick={() => handleDelete(item.id)}
+                      className="text-gray-500 hover:text-red-500"
+                    >
+                      <FiTrash2 size={18} />
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
@@ -307,7 +319,9 @@ const CartItems = () => {
                     >
                       <span>
                         {parseFloat(rule.min_weight)}kg –{" "}
-                        {rule.max_weight ? `${parseFloat(rule.max_weight)}kg` : "above"}
+                        {rule.max_weight
+                          ? `${parseFloat(rule.max_weight)}kg`
+                          : "above"}
                       </span>
                       <span>£{parseFloat(rule.fee).toFixed(2)}</span>
                     </li>

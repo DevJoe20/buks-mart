@@ -92,10 +92,10 @@ const BuksFooter = () => {
         {/* Contact */}
         <div>
           <h3 className="text-white font-semibold mb-4">Contact</h3>
-          <p className="text-sm leading-relaxed text-gray-400">
+          {/* <p className="text-sm leading-relaxed text-gray-400">
             123 Nigerian Food Street<br />
             London, E1 6AN
-          </p>
+          </p> */}
           <p className="text-sm mt-3 text-gray-400">
             {storeInfo?.business_phone || "+44 20 7XXX XXXX"}
           </p>

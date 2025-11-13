@@ -1,30 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { supabase } from "../../../supabaseClient";
 import { motion } from "framer-motion";
 
 export default function Tradition() {
-  const [imageUrl, setImageUrl] = useState(null);
-
-  useEffect(() => {
-    const fetchImage = async () => {
-      const { data, error } = await supabase
-        .from("products")
-        .select("image_url")
-        .eq("id", "54596240-5f62-4155-9ab9-74ec258eec23")
-        .single();
-
-      if (error) {
-        console.error("Error fetching image:", error.message);
-      } else {
-        setImageUrl(data?.image_url);
-      }
-    };
-
-    fetchImage();
-  }, []);
-
   return (
     <section className="bg-[#FAF7F2] py-12 px-6 md:px-16">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
@@ -37,15 +15,11 @@ export default function Tradition() {
           viewport={{ once: true }}
           className="w-full"
         >
-          {imageUrl ? (
-            <img
-              src={imageUrl}
-              alt="Tradition"
-              className="rounded-lg shadow-md w-full object-cover"
-            />
-          ) : (
-            <div className="w-full h-64 bg-gray-200 rounded-lg animate-pulse" />
-          )}
+          <img
+            src="/coconut-cookies.jpg"
+            alt="Coconut Cookies"
+            className="rounded-lg shadow-md w-full object-cover"
+          />
         </motion.div>
 
         {/* Right Content with Animation */}
@@ -66,11 +40,6 @@ export default function Tradition() {
             Discover Nigeria’s most loved classics — Bobo, Hollandia, 
             Caprisun, Speedy Biscuit, and more — all in one place.
           </p>
-          {/* <p className="text-[#3D2B1F] leading-relaxed mb-4">
-            Our mission goes beyond indulgence. It’s about preserving the essence of 
-            Nigerian snacking culture, reconnecting you with the memories that shaped you, 
-            and sharing those flavors with the next generation — wherever you are in the world.
-          </p> */}
           <p className="text-[#3D2B1F] font-semibold">
             Authentic. Nostalgic. Unmistakably Nigerian. <br />
             Welcome to the taste of home, reimagined.

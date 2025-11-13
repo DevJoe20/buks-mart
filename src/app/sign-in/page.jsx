@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { signInUser } from "../../../auth"; // adjust path if needed
+import { signInUser } from "../../../auth";
 import { supabase } from "../../../supabaseClient";
 import Link from "next/link";
 
@@ -14,7 +14,6 @@ export default function SignIn() {
   const [businessLogo, setBusinessLogo] = useState(null);
   const [businessName, setBusinessName] = useState("Buks Mart");
 
-  // Fetch logo + business name from store_info
   useEffect(() => {
     const fetchStoreInfo = async () => {
       try {

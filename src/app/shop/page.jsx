@@ -19,13 +19,18 @@ export default function OurShop() {
 
   const { addToCart } = useCart();
 
+  // === FETCH PRODUCTS + IMAGES + CATEGORIES ===
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
 
       const { data: productsData, error: productError } = await supabase
         .from("products")
-        .select("*, categories(category_name)");
+        .select(`
+          *,
+          categories(category_name),
+          product_images(image_url, is_main)
+        `);
 
       const { data: categoryData, error: categoryError } = await supabase
         .from("categories")
@@ -34,6 +39,8 @@ export default function OurShop() {
       if (!productError && !categoryError) {
         setProducts(productsData);
         setCategories(categoryData);
+      } else {
+        console.error("Error fetching data:", productError || categoryError);
       }
 
       setLoading(false);
@@ -47,6 +54,7 @@ export default function OurShop() {
     toast.success(`${product.name} added to cart!`);
   };
 
+  // === FILTER & SORT ===
   useEffect(() => {
     let filtered = [...products];
 
@@ -113,7 +121,7 @@ export default function OurShop() {
 
       {/* Top Controls */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
-        <div className="flex flex-wrap gap-3 ">
+        <div className="flex flex-wrap gap-3">
           <div>
             <p className="uppercase text-xs font-semibold text-gray-500 mb-1">
               Shop by Category
@@ -146,9 +154,9 @@ export default function OurShop() {
         </div>
       </div>
 
-      {/* === NEW CONTAINER STRUCTURE === */}
+      {/* === MAIN CONTAINER === */}
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Sidebar (fixed height or scrollable) */}
+        {/* Sidebar */}
         <div className="lg:col-span-1 border rounded-md p-4 bg-[#FAF8F4] h-auto lg:h-[300px] overflow-y-auto lg:sticky lg:top-6">
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-semibold text-gray-700 flex items-center gap-2">
@@ -236,48 +244,58 @@ export default function OurShop() {
               ))}
             </div>
           ) : filteredProducts.length === 0 ? (
-            <p className="text-center py-10 text-gray-500">No products found.</p>
+            <p className="text-center py-10 text-gray-500">
+              No products found.
+            </p>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="bg-[#FAF8F4] border border-[#f4e3d4] rounded-xl transform hover:scale-105 shadow-sm hover:shadow-md transition overflow-hidden flex flex-col"
-                >
-                  <img
-                    src={product.image_url}
-                    alt={product.name}
-                    className="w-full h-56 object-cover px-4 py-4 rounded"
-                  />
-                  <div className="flex-1 flex flex-col justify-between px-4 py-3">
-                    <h4 className="text-[15px] font-semibold text-[#7a3e00] mb-1">
-                      {product.name}
-                    </h4>
-                    <p className="text-[#3a2100] text-[15px] font-semibold mb-1">
-                      £{parseFloat(product.price).toLocaleString()}
-                    </p>
-                    <p className="text-xs text-[#a87552] mb-3">
-                      {product.is_available ? "In Stock" : "Out of Stock"}
-                    </p>
+              {filteredProducts.map((product) => {
+                const mainImage =
+                  product.product_images?.find((img) => img.is_main)?.image_url ||
+                  product.product_images?.[0]?.image_url ||
+                  product.image_url ||
+                  "/placeholder.png";
 
-                    <div className="flex flex-col gap-2 mt-auto">
-                      <button
-                        onClick={() => handleAddToCart(product)}
-                        className="bg-[#A44A26] hover:bg-[#8c4100] text-white text-sm py-2 rounded-md transition cursor-pointer"
-                      >
-                        Add to Cart
-                      </button>
+                return (
+                  <div
+                    key={product.id}
+                    className="bg-[#FAF8F4] border border-[#f4e3d4] rounded-xl transform hover:scale-105 shadow-sm hover:shadow-md transition overflow-hidden flex flex-col"
+                  >
+                    <img
+                      src={mainImage}
+                      alt={product.name}
+                      className="w-full h-56 object-cover px-4 py-4 rounded"
+                    />
+                    <div className="flex-1 flex flex-col justify-between px-4 py-3">
+                      <h4 className="text-[15px] font-semibold text-[#7a3e00] mb-1">
+                        {product.name}
+                      </h4>
+                      <p className="text-[#3a2100] text-[15px] font-semibold mb-1">
+                        £{parseFloat(product.price).toLocaleString()}
+                      </p>
+                      <p className="text-xs text-[#a87552] mb-3">
+                        {product.is_available ? "In Stock" : "Out of Stock"}
+                      </p>
 
-                      <Link
-                        href={`/product/${product.id}`}
-                        className="text-center border border-[#a04b00] text-[#a04b00] text-sm py-2 rounded-md hover:bg-[#fff3e9] transition"
-                      >
-                        View Product
-                      </Link>
+                      <div className="flex flex-col gap-2 mt-auto">
+                        <button
+                          onClick={() => handleAddToCart(product)}
+                          className="bg-[#A44A26] hover:bg-[#8c4100] text-white text-sm py-2 rounded-md transition cursor-pointer"
+                        >
+                          Add to Cart
+                        </button>
+
+                        <Link
+                          href={`/product/${product.id}`}
+                          className="text-center border border-[#a04b00] text-[#a04b00] text-sm py-2 rounded-md hover:bg-[#fff3e9] transition"
+                        >
+                          View Product
+                        </Link>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>

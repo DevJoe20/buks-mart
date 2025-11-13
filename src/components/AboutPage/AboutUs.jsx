@@ -11,7 +11,7 @@ export default function AboutUs() {
         <div>
           <h2 className="text-4xl font-bold mb-6">Our Story</h2>
           <p className="text-lg leading-relaxed mb-6">
-            Born from nostalgia and a deep love for Nigerian cuisine, <span className="font-semibold">Naija Bites</span> 
+            Born from nostalgia and a deep love for Nigerian cuisine, <span className="font-semibold">Naija Bites </span>  
             was created to bridge the gap between home and the diaspora, one authentic snack at a time.
           </p>
           <Link
@@ -25,7 +25,7 @@ export default function AboutUs() {
         {/* Right Image */}
         <div className="flex justify-center">
           <Image
-            src="/caring-mother.png"
+            src="/sweet-mother.png"
             alt="About Us"
             width={600}
             height={400}

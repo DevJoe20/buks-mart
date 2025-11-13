@@ -22,7 +22,7 @@ export default function MyOrder() {
           return;
         }
 
-        // ✅ Fetch orders with items + product details
+        // ✅ Fetch orders with items + product + product_images
         const { data, error } = await supabase
           .from("orders")
           .select(`
@@ -37,8 +37,12 @@ export default function MyOrder() {
               unit_price,
               total_price,
               products (
+                id,
                 name,
-                image_url
+                product_images (
+                  image_url,
+                  is_main
+                )
               )
             )
           `)
@@ -46,7 +50,22 @@ export default function MyOrder() {
           .order("created_at", { ascending: false });
 
         if (error) throw error;
-        setOrders(data);
+
+        // ✅ Process data: find main or fallback image for each product
+        const processed = data.map((order) => ({
+          ...order,
+          order_items: order.order_items.map((item) => {
+            const images = item.products?.product_images || [];
+            const mainImage =
+              images.find((img) => img.is_main) || images[0];
+            return {
+              ...item,
+              productImage: mainImage?.image_url || "/placeholder.png",
+            };
+          }),
+        }));
+
+        setOrders(processed);
       } catch (err) {
         console.error("Error fetching orders:", err.message);
       } finally {
@@ -112,12 +131,9 @@ export default function MyOrder() {
 
             <div className="divide-y">
               {order.order_items.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex items-center gap-3 py-2"
-                >
+                <div key={item.id} className="flex items-center gap-3 py-2">
                   <img
-                    src={item.products?.image_url || "/placeholder.png"}
+                    src={item.productImage}
                     alt={item.products?.name}
                     className="w-16 h-16 object-cover rounded-md border"
                   />
@@ -140,10 +156,7 @@ export default function MyOrder() {
       {/* Mobile View */}
       <div className="grid gap-4 md:hidden">
         {orders.map((order) => (
-          <div
-            key={order.id}
-            className="bg-white shadow-sm rounded-xl p-3 border"
-          >
+          <div key={order.id} className="bg-white shadow-sm rounded-xl p-3 border">
             <div className="flex justify-between items-center mb-2">
               <h3 className="font-semibold text-base">
                 #{order.id.slice(0, 6)}
@@ -169,22 +182,15 @@ export default function MyOrder() {
 
             <div className="space-y-2">
               {order.order_items.map((item) => (
-                <div
-                  key={item.id}
-                  className="flex items-center gap-2"
-                >
+                <div key={item.id} className="flex items-center gap-2">
                   <img
-                    src={item.products?.image_url || "/placeholder.png"}
+                    src={item.productImage}
                     alt={item.products?.name}
                     className="w-12 h-12 object-cover rounded-md border"
                   />
                   <div className="flex-1">
-                    <p className="text-sm font-medium">
-                      {item.products?.name}
-                    </p>
-                    <p className="text-xs text-gray-500">
-                      Qty: {item.quantity}
-                    </p>
+                    <p className="text-sm font-medium">{item.products?.name}</p>
+                    <p className="text-xs text-gray-500">Qty: {item.quantity}</p>
                   </div>
                   <p className="text-sm font-semibold text-gray-700">
                     {order.currency} {item.total_price}

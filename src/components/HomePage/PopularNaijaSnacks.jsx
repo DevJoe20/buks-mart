@@ -12,13 +12,32 @@ export default function PopularNaijaSnacks() {
     const fetchSnacks = async () => {
       const { data, error } = await supabase
         .from("products")
-        .select("id, name, texture, image_url")
+        .select(`
+          id,
+          name,
+          texture,
+          product_images (
+            image_url,
+            is_main
+          )
+        `)
         .limit(4);
 
       if (error) {
         console.error("Error fetching snacks:", error);
       } else {
-        setSnacks(data);
+        // ✅ Pick the main image (is_main = true), else first available image
+        const processed = data.map((snack) => {
+          const images = snack.product_images || [];
+          const mainImage =
+            images.find((img) => img.is_main) || images[0];
+          return {
+            ...snack,
+            image_url: mainImage?.image_url || "/placeholder.png",
+          };
+        });
+
+        setSnacks(processed);
       }
     };
 
@@ -46,7 +65,7 @@ export default function PopularNaijaSnacks() {
             >
               <div className="relative w-full h-36 sm:h-40 lg:h-48">
                 <Image
-                  src={snack.image_url || "/placeholder.png"}
+                  src={snack.image_url}
                   alt={snack.name}
                   fill
                   className="object-cover"

@@ -10,9 +10,9 @@ export default function HeroSection() {
   useEffect(() => {
     const fetchImage = async () => {
       const { data, error } = await supabase
-        .from("products")
+        .from("product_images")
         .select("image_url")
-        .eq("id", "1d9ffdf7-819a-444b-a4c9-d330e5ab8cef")
+        .eq("id", "1841f164-6afc-4112-b8a0-68c41d866971")
         .single();
 
       if (error) {

@@ -12,6 +12,7 @@ const ProductDetails = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [adding, setAdding] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const { addToCart } = useCart();
 
@@ -19,13 +20,29 @@ const ProductDetails = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       setLoading(true);
+
       const { data, error } = await supabase
         .from("products")
-        .select("*")
+        .select(
+          `
+          *,
+          categories(category_name),
+          product_images(image_url, is_main)
+        `
+        )
         .eq("id", id)
         .single();
 
-      if (!error) setProduct(data);
+      if (!error) {
+        setProduct(data);
+
+        // Set main or first image as default
+        const mainImage =
+          data.product_images?.find((img) => img.is_main)?.image_url ||
+          data.product_images?.[0]?.image_url;
+        setSelectedImage(mainImage || "/placeholder.png");
+      }
+
       setLoading(false);
     };
 
@@ -51,22 +68,41 @@ const ProductDetails = () => {
 
   return (
     <div className="bg-[#FAF8F4] py-8 px-6 lg:px-12">
-      {/* Mobile Card */}
+      {/* === MOBILE VIEW === */}
       <div className="block md:hidden space-y-6">
         {/* Image */}
-        <div className="flex justify-center">
+        <div className="flex flex-col items-center">
           <img
-            src={product.image_url}
+            src={selectedImage}
             alt={product.name}
             className="max-h-[350px] object-contain rounded"
           />
+
+          {/* Thumbnails */}
+          <div className="flex gap-2 mt-3">
+            {product.product_images?.map((img, i) => (
+              <img
+                key={i}
+                src={img.image_url}
+                onClick={() => setSelectedImage(img.image_url)}
+                alt={`Thumbnail ${i + 1}`}
+                className={`w-16 h-16 object-cover rounded cursor-pointer border ${
+                  selectedImage === img.image_url
+                    ? "border-orange-500"
+                    : "border-transparent"
+                }`}
+              />
+            ))}
+          </div>
         </div>
 
         {/* Info */}
         <div>
           <nav className="text-gray-500 mb-4">
-            <Link href="/" className="hover:text-blue-600">Home</Link> / 
-            <span className="text-gray-900 ml-1">{product.name}</span>
+            <Link href="/" className="hover:text-blue-600">
+              Home
+            </Link>{" "}
+            / <span className="text-gray-900 ml-1">{product.name}</span>
           </nav>
 
           <h1 className="text-2xl font-semibold">{product.name}</h1>
@@ -83,7 +119,7 @@ const ProductDetails = () => {
             {adding ? "Adding..." : "Add to Cart"}
           </button>
 
-          {/* Extra Meta Fields (Mobile, stacked) */}
+          {/* Meta Fields */}
           <div className="mt-6 space-y-2 text-sm text-gray-700">
             {product.tags && (
               <div>
@@ -98,22 +134,72 @@ const ProductDetails = () => {
                 ))}
               </div>
             )}
-            {product.type && <p><span className="font-medium">Type:</span> {product.type}</p>}
-            {product.weight && <p><span className="font-medium">Weight:</span> {product.weight}</p>}
-            {product.texture && <p><span className="font-medium">Texture:</span> {product.texture}</p>}
-            {product.flavor && <p><span className="font-medium">Flavor:</span> {product.flavor}</p>}
-            {product.shape && <p><span className="font-medium">Shape:</span> {product.shape}</p>}
+            {product.type && (
+              <p>
+                <span className="font-medium">Type:</span> {product.type}
+              </p>
+            )}
+            {product.weight && (
+              <p>
+                <span className="font-medium">Weight:</span> {product.weight}
+              </p>
+            )}
+            {product.texture && (
+              <p>
+                <span className="font-medium">Texture:</span> {product.texture}
+              </p>
+            )}
+            {product.flavor && (
+              <p>
+                <span className="font-medium">Flavor:</span> {product.flavor}
+              </p>
+            )}
+            {product.shape && (
+              <p>
+                <span className="font-medium">Shape:</span> {product.shape}
+              </p>
+            )}
           </div>
         </div>
       </div>
 
-      {/* 🖥️ Desktop Card */}
+      {/* === DESKTOP VIEW === */}
       <div className="hidden md:flex flex-wrap">
-        {/* Left: Info */}
-        <div className="w-1/2 pr-8">
+        {/* Left: Image Gallery */}
+        <div className="w-1/2 flex flex-col items-center">
+          <div className="relative">
+            <img
+              src={selectedImage}
+              alt={product.name}
+              className="max-h-[500px] object-contain rounded"
+            />
+          </div>
+
+          {/* Thumbnail row */}
+          <div className="flex gap-3 mt-4">
+            {product.product_images?.map((img, i) => (
+              <img
+                key={i}
+                src={img.image_url}
+                onClick={() => setSelectedImage(img.image_url)}
+                alt={`Thumbnail ${i + 1}`}
+                className={`w-20 h-20 object-cover rounded cursor-pointer border ${
+                  selectedImage === img.image_url
+                    ? "border-orange-500"
+                    : "border-transparent"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Right: Info */}
+        <div className="w-1/2 pl-8">
           <nav className="text-gray-500 mb-6">
-            <Link href="/" className="hover:text-blue-600">Home</Link> / 
-            <span className="text-gray-900 ml-1">{product.name}</span>
+            <Link href="/" className="hover:text-blue-600">
+              Home
+            </Link>{" "}
+            / <span className="text-gray-900 ml-1">{product.name}</span>
           </nav>
 
           <h1 className="text-3xl font-semibold">{product.name}</h1>
@@ -130,7 +216,7 @@ const ProductDetails = () => {
             {adding ? "Adding..." : "Add to Cart"}
           </button>
 
-          {/* Extra Meta Fields (Desktop, cleaner layout) */}
+          {/* Meta Fields */}
           <div className="mt-8 grid grid-cols-2 gap-4 text-sm text-gray-700">
             {product.tags && (
               <div className="col-span-2">
@@ -147,21 +233,32 @@ const ProductDetails = () => {
                 </div>
               </div>
             )}
-            {product.type && <p><span className="font-medium">Type:</span> {product.type}</p>}
-            {product.weight && <p><span className="font-medium">Weight:</span> {product.weight}</p>}
-            {product.texture && <p><span className="font-medium">Texture:</span> {product.texture}</p>}
-            {product.flavor && <p><span className="font-medium">Flavor:</span> {product.flavor}</p>}
-            {product.shape && <p><span className="font-medium">Shape:</span> {product.shape}</p>}
+            {product.type && (
+              <p>
+                <span className="font-medium">Type:</span> {product.type}
+              </p>
+            )}
+            {product.weight && (
+              <p>
+                <span className="font-medium">Weight:</span> {product.weight}
+              </p>
+            )}
+            {product.texture && (
+              <p>
+                <span className="font-medium">Texture:</span> {product.texture}
+              </p>
+            )}
+            {product.flavor && (
+              <p>
+                <span className="font-medium">Flavor:</span> {product.flavor}
+              </p>
+            )}
+            {product.shape && (
+              <p>
+                <span className="font-medium">Shape:</span> {product.shape}
+              </p>
+            )}
           </div>
-        </div>
-
-        {/* Right: Image */}
-        <div className="w-1/2 flex justify-center">
-          <img
-            src={product.image_url}
-            alt={product.name}
-            className="max-h-[500px] object-contain rounded"
-          />
         </div>
       </div>
     </div>
